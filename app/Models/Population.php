@@ -10,12 +10,4 @@ class Population extends Model
     use HasFactory;
 
     protected $fillable = ['value', 'state_id', 'year'];
-
-    /**
-     * Get the latest register year
-     */
-    public static function latestYear(): ?int
-    {
-        return self::orderBy('year', 'desc')->select('year')->first()?->year;
-    }
 }

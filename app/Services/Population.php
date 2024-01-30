@@ -13,7 +13,7 @@ class Population
      */
     public static function updateData(): void
     {
-        $year = (ModelsPopulation::latestYear() ?? 2014) + 1;
+        $year = (ModelsPopulation::max('year') ?? 2014) + 1;
 
         $currentYear = now()->year;
 
@@ -26,6 +26,9 @@ class Population
                     'name' => $item['State'],
                     'custom_id' => $item['ID State'],
                 ]);
+                
+                if( $state->populations()->where('year', $item["Year"])->first() )
+                    continue;
 
                 $state->populations()->create([
                     'year' => $item['Year'],
