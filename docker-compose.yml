@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-urbium
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    depends_on:
+      - php
+      - db
+    networks:
+      - laravel
+
+  db:
+    image: mysql
+    platform: linux/x86_64
+    container_name: mysql-urbium
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+    ports:
+      - "3305:3306"
+    environment:
+      MYSQL_DATABASE: urbium
+      MYSQL_USER: urbium
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - laravel
+
+  php:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - .:/var/www
+    ports:
+      - "9001:9000"
+    networks:
+      - laravel
+
+networks:
+  laravel:
+    driver: bridge
