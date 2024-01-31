@@ -7,15 +7,14 @@ use App\Models\State;
 use App\Services\Population;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-
 use Tests\Traits\FakeDatausaApi;
 
 class UpdatePopulationDataTest extends TestCase
 {
-    use RefreshDatabase, FakeDatausaApi;
+    use FakeDatausaApi, RefreshDatabase;
 
     /**
-     * Test if the updateData function run correctly 
+     * Test if the updateData function run correctly
      */
     public function testFirstUpdateData(): void
     {
