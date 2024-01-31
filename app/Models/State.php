@@ -19,4 +19,12 @@ class State extends Model
     {
         return $this->hasMany(Population::class);
     }
+
+    /**
+     * Calculate rounded population avg
+     */
+    public function calculatePopulationAvg(): int
+    {
+        return round($this->populations()->avg('value'));
+    }
 }

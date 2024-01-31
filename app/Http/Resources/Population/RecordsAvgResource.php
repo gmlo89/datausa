@@ -15,7 +15,7 @@ class RecordsAvgResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'avg' => round($this->populations()->avg('value')),
+            'avg' => $this->calculatePopulationAvg(),
         ];
     }
 }
