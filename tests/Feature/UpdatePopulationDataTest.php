@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Jobs\PopulationUpdate;
 use App\Models\Population as ModelsPopulation;
 use App\Models\State;
-use App\Services\Population;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Tests\Traits\FakeDatausaApi;
@@ -21,7 +21,7 @@ class UpdatePopulationDataTest extends TestCase
 
         $this->mockDatausa();
 
-        Population::updateData();
+        PopulationUpdate::dispatch();
 
         $this->assertEquals(ModelsPopulation::min('year'), 2015);
         $this->assertEquals(ModelsPopulation::max('year'), now()->year);

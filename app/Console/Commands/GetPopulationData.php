@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Services\Population;
+use App\Jobs\PopulationUpdate;
 use Illuminate\Console\Command;
 
 class GetPopulationData extends Command
@@ -26,6 +26,6 @@ class GetPopulationData extends Command
      */
     public function handle()
     {
-        Population::updateData();
+        PopulationUpdate::dispatch();
     }
 }

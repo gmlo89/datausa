@@ -1,19 +1,34 @@
 <?php
 
-namespace App\Services;
+namespace App\Jobs;
 
-use App\Models\Population as ModelsPopulation;
+use App\Models\Population;
 use App\Models\State;
 use App\Services\Integrations\Datausa;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
-class Population
+class PopulationUpdate implements ShouldQueue
 {
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
     /**
-     * Get the population data since the last update (or 2015) until the current year
+     * Create a new job instance.
      */
-    public static function updateData(): void
+    public function __construct()
     {
-        $year = (ModelsPopulation::max('year') ?? 2014) + 1;
+        //
+    }
+
+    /**
+     * Execute the job.
+     */
+    public function handle(): void
+    {
+        $year = (Population::max('year') ?? 2014) + 1;
 
         $currentYear = now()->year;
 
