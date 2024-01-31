@@ -27,12 +27,9 @@ class Population
                     'custom_id' => $item['ID State'],
                 ]);
 
-                if ($state->populations()->where('year', $item['Year'])->first()) {
-                    continue;
-                }
-
-                $state->populations()->create([
+                $state->populations()->firstOrCreate([
                     'year' => $item['Year'],
+                ], [
                     'value' => $item['Population'],
                 ]);
             }
