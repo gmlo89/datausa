@@ -15,3 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('state/population-records/{state:slug}', [PopulationController::class, 'populationRecords']);
+Route::get('state/population-records/{state:slug}/avg', [PopulationController::class, 'populationRecordsAvg']);

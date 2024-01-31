@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Http\Resources\Population\RecordsAvgResource;
 use App\Models\Population;
 use App\Models\State;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -44,5 +45,21 @@ class PopulationControllerTest extends TestCase
         $response = $this->get('/api/state/population-records/does-not-exist');
 
         $response->assertNotFound();
+    }
+
+    /**
+     * Test population record avg by state
+     */
+    public function testPopulationRecordsAvg(): void
+    {
+        $state = State::factory()->has(Population::factory()->count(3))->create();
+
+        $response = $this->get("/api/state/population-records/{$state->slug}/avg");
+
+        $response->assertOk();
+
+        $resource = new RecordsAvgResource($state);
+
+        $response->assertExactJson($resource->response()->getData(true));
     }
 }
